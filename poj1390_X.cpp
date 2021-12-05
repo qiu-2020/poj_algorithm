@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 
 class block{
 public:
@@ -79,6 +80,24 @@ int maxscore(std::vector<block> v){
     }
 }
 
+int ClickBox(int i,int j,int externLen){
+    if(i == j) return std::pow(v[i].k + externLen,2);
+    else if(i == j - 1){
+        if(v[i].c == v[j].c) return std::pow(v[i].k + v[j].k + externLen,2);
+        else return std::pow(v[i].k,2) + std::pow(v[j].k + externLen,2);
+    }
+    else{
+        int sc = std::pow(externLen + v[j].k,2) + ClickBox(i,j - 1,0);
+        for(int k = j - 1;k >= i;--k){
+            if(v[k].c == v[j].c){
+                int tmp = ClickBox(k + 1,j - 1,0) + ClickBox(i,k,v[j].k + externLen);
+                sc = std::max(sc,tmp);
+            }
+        }
+        return sc;
+    }
+}
+
 int main(){
     int g;
     std::cin>>g;
@@ -103,7 +122,7 @@ int main(){
                 }    
             }
         }
-        std::cout<<"Case"<<' '<<i + 1<<':'<<maxscore(v)<<std::endl;
+        std::cout<<"Case"<<' '<<i + 1<<':'<<ClickBox(0,n - 1,0)<<std::endl;
         v.clear();
     }
 
