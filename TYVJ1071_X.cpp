@@ -1,9 +1,11 @@
 #include <iostream>
 
 const int MAX = 10010;
-int len;
+int len,l1,l2;
 int a[MAX] = {0};
 int b[MAX] = {0};
+
+int ans[MAX][MAX];
 
 int LCIS(int i1,int i2,int last){ //以i1，i2为结尾的最长公共子序列
     if(i1 == 0 || i2 == 0)
@@ -19,7 +21,17 @@ int LCIS(int i1,int i2,int last){ //以i1，i2为结尾的最长公共子序列
 }
 
 void LCIS_dp(void){
-    
+    for(int i = 0;i < len;++i){
+        for(int j = 0;j < len;++j){
+            if(i == 0 )
+            if(a[i] == b[j])
+                for(int k = 0;k < j;++k){
+                    if(b[k] < b[j])
+                        ans[i][j] = std::max(ans[i][j],ans[i - 1][k] + 1);
+                }
+            else ans[i][j] = ans[i - 1][j];    
+        }
+    }
 }
 
 
@@ -32,11 +44,13 @@ void LCIS_dp(void){
 
 
 int main(){
-    int l1,l2;
-    std::cin>>l1>>l2;
-    for(int i = 0;i < l1;++i) std::cin>>a[i];
-    for(int i = 0;i < l2;++i) std::cin>>b[i];
-    len = std::max(l1,l2);
-    std::cout<<LCIS(l1 - 1,l2 - 1,10000)<<std::endl;
+    // int l1,l2;
+    std::cin>>len;
+    for(int i = 0;i < len;++i) std::cin>>a[i];
+    for(int i = 0;i < len;++i) std::cin>>b[i];
+//    len = std::max(l1,l2);
+    // std::cout<<LCIS(l1 - 1,l2 - 1,10000)<<std::endl;
+    LCIS_dp();
+    std::cout<<ans[len - 1][len - 1]<<std::endl;
     return 0;
 }
