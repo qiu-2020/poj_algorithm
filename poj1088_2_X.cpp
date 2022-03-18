@@ -19,7 +19,7 @@ int max_length(void){
     for(int i = 2;i <= len;++i){
         for(int j = i - 1;j >= 1;--j){
             if(p[i].h > p[j].h){
-                if(p[i].r != 1 && p[i].r - 1 == p[j].r && p[i].c ==)
+
             }
         }
     }
