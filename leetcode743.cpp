@@ -6,42 +6,34 @@ using namespace std;
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        int dis[n];
-        bool visited[n];
-        for(int i = 0;i < n;++i){
+        int dis[n + 1];bool visited[n + 1];
+        for(int i = 1;i <= n;++i){
             dis[i] = 1 << 30;
             visited[i] = false;
         }    
         dis[k] = 0;
-        int t[n][n];
-        for(int i = 0;i < n;++i)
-            for(int j = 0;j < n;++j)
-                t[i][j] = 1 << 30;
-        for(int i = 0;i < times.size();++i){
-            t[times[i][0]][times[i][1]] = times[i][2];
-        }
+
         for(int i = 0;i < n;++i){
-            int min_dis = 1 << 30,min_index = -1;
-            for(int j = 0;j < n;++j){
-                if(dis[i] < min_dis){
-                    min_dis = dis[i];
-                    min_index = i;
+            int min_dis = 0x3f3f3f3f,index = -1;
+            for(int j = 1;j <= n;++j){
+                if(!visited[j] && dis[j] < min_dis){
+                    index = j;
+                    min_dis = dis[j];
                 }
             }
-            if(min_index == -1) return -1;
-            visited[min_dis] = true;
-            for(int j = 0;j < n;++j){
-                if(!visited[j] && t[min_dis][j] + dis[min_index] < dis[j])
-                    dis[j] = t[min_dis][j] + dis[min_index];
+            if(index == -1) return -1;
+            visited[index] = true;
+            for(int j = 0;j < times.size();++j){
+                if(times[j][0] == index)
+                    if(dis[index] + times[j][2] < dis[times[j][1]])
+                        dis[times[j][1]] = dis[index] + times[j][2];
             }
         }
-        int ans = dis[0];
-        for(int i = 1;i < n;++i){
-            if(dis[i] > ans)
+        int ans = dis[1];
+        for(int i = 2;i <= n;++i)
+            if(ans < dis[i])
                 ans = dis[i];
-        }
-        if(ans == 0x3f3f3f3f)   return -1;
-        else return ans; 
+        return ans;        
     }
 
 

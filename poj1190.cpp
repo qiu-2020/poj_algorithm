@@ -13,10 +13,6 @@ void DFS(int v_remain,int l_remain,int r,int h){
     if((v_remain != 0 && l_remain == 0) || (v_remain == 0 && l_remain != 0))
         return ;
 
-    if(v_remain > r * r * h) return;
-    if(minL[M - l_remain] < v_remain) return;
-    else minL[r][l_remain] = v_remain;
-
     for(int rr = r;rr > l_remain;--rr){
         if(l_remain == M) area += rr * rr;
         for(int hh = h;hh > l_remain;--h){
