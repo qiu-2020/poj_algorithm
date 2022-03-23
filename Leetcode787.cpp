@@ -6,36 +6,20 @@ class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
         int dis[n];
-        bool flag[n];
-        for(int i = 0;i < n;++i){
-            dis[i] = 1 << 30;
-            flag[i] = false;
-        }    
-        dis[src] = 0;
-        for(int i = 0;i < k;++i){
-            for(int f = 0;f < n;f++)
-                flag[f] = false;
-            int d_pre[n];   
+        for(int i = 0;i < n;++i)
+            dis[i] = (1 << 30);
+        dis[src] = 0;    
+        for(int i = 0;i <= k;++i){
+            int tmp[n];
+            for(int i = 0;i < n;++i)
+                tmp[i] = dis[i];
             for(int j = 0;j < flights.size();++j){
-                if(dis[flights[j][0]] != (1 << 30) && dis[flights[j][1]] > dis[flights[j][0]] + flights[j][2]){
-                    if(flag[flights[j][0]]){
-                        dis[flights[j][1]] = d_pre[flights[j][0]] + flights[j][2];    
-                    }
-                    d_pre[flights[j][1]] = dis[flights[j][1]];
-                    dis[flights[j][1]] = dis[flights[j][0]] + flights[j][2];
-                    flag[flights[j][1]] = true;
-                    }
-            }
-        }
-        for(int i = 0;i < flights.size();++i){
-            if(flights[i][1] == dst){
-                if(dis[flights[i][0]] != (1 << 30) && dis[flights[i][1]] > dis[flights[i][0]] + flights[i][2])
-                    dis[flights[i][1]] = dis[flights[i][0]] + flights[i][2];
+                if(tmp[flights[j][0]] != (1 << 30) && dis[flights[j][1]] > tmp[flights[j][0]] + flights[j][2])
+                    dis[flights[j][1]] = tmp[flights[j][0]] + flights[j][2];
             }
         }
         if(dis[dst] == (1 << 30)) return -1;
-        else return dis[dst];
-        
+        else return dis[dst];    
     }    
 
 // 如果当前这条边的权重 + 走小于等于k-1条边到a点的距离小于源点到b的距离 则更新
