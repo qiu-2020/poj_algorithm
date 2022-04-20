@@ -7,7 +7,7 @@ class Array2 {
 // 在此处补充你的代码
 private:
     int _row,_col;
-    T* _ptr;
+    int* _ptr;
 public:
     Array2(int r,int c):_row(r),_col(c){
         _ptr = new int [r * c];
