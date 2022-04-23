@@ -11,11 +11,19 @@ private:
     T _arr[size];    
 public:
     A(T* ptr){
-        memcpy(_arr,ptr,size * sizeof(ptr[0]));
+        for(int i = 0;i < size;++i)
+            *(_arr + i) = *(ptr + i);
     }
     // template<typename T_f>
-    T sum(int s,int e,T (*)(int) f){
-        T ans = 0;
+    // int[] -> int or int[] -> string
+    int sum(int s,int e,int (*f)(T) ){
+        int ans(0);
+        for(int i = s;i <= e;++i)
+            ans += f(_arr[i]);
+        return ans;    
+    }
+    string sum(int s,int e,string (*f)(T)){
+        string ans = "";
         for(int i = s;i <= e;++i)
             ans += f(_arr[i]);
         return ans;    
