@@ -7,12 +7,15 @@ using namespace std;
 template <typename T>
 class Print{
     int _size;
-    T _out_put;
+    // T _out_put;
 public:
     Print(int s):_size(s){}
-    // void operator()(T& x){
-        
-    // }
+	Print<T>& operator+(const T& elem){
+		std::cout<<elem;
+		_size--;
+		if(_size == 0) std::cout<<std::endl;
+		return *this;
+	}
 };
 
 int main(){

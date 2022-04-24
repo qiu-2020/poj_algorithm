@@ -6,46 +6,31 @@ template <class T>
 class CArray3D
 {
 // 在此处补充你的代码
-class CArray2D;
+	class CArray2D{
+	private:
+		T* _arr_2D;
+		int _row,_col;
+	public:
+		CArray2D():_arr_2D(nullptr),_row(0),_col(0){}
+		CArray2D(int r,int c,T* _ptr_arr2D):_row(r),_col(c),_arr_2D(_ptr_arr2D){}
+		T* operator[](const int& r){
+			return _arr_2D + r * _col;
+		}
+		operator T*(){
+			return _arr_2D;
+		} 
+	};
 private:
-    int _layer;
-    CArray2D* _arr_3D;
-    class CArray2D{
-    private:
-        int _row,_col;
-        T* _arr_2D;
-    public:
-        CArray2D():_row(0),_col(0){
-            _arr_2D = nullptr;
-        }
-        CArray2D(int r,int c):_row(r),_col(c){
-            _arr_2D = new T [r * c];
-        }
-        ~CArray2D(){
-            if(_arr_2D != nullptr)
-                delete [] nullptr;
-        }
-        T* operator[](const int& r){
-            return _arr_2D[r * _col];
-        }
-        operator CArray2D*(){
-            return _arr_2D;
-        }
-    };
+	int _layer,_row,_col;
+	T* _arr_3D;
 public:
-    CArray3D(int l,int r,int c):_layer(l){
-        _arr_3D = new CArray2D [l];
-        for(int i = 0;i < _layer;++i)
-            _arr_3D[i] = new CArray2D(r,c);
-    }
-
-    CArray2D& operator[](const int& l){
-        return *(_arr_3D + l);
-    }
-
-    // operator CArray2D*(){
-    //     return _
-    // }
+	CArray3D():_layer(0),_arr_3D(nullptr){}
+	CArray3D(int l,int r,int c):_layer(l),_row(r),_col(c){
+		_arr_3D = new T [_layer * _row * _col];
+	}	
+	CArray2D operator[](const int& l){
+		return CArray2D(_row,_col,_arr_3D + l * _row * _col);
+	}
 };
 
 CArray3D<int> a(3,4,5);

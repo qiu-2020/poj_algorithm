@@ -5,7 +5,10 @@ using namespace std;
 // 在此处补充你的代码
 
 class myComp{
-    
+public:
+	bool operator()(const pair<int,int>& p1,const pair<int,int>& p2){
+		return p1.first + p1.second < p2.first + p2.second;
+	}
 };
 
 int main() {

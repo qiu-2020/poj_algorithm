@@ -17,8 +17,12 @@ int main() {
 		for(int i = 0;i < 12; ++i)
 			cin >> a[i];
 // 在此处补充你的代码
-        set<int,less<int>> b{a[12]};
-        typedef std::ostream_iterator<int>(std::cout,' ') c;
+
+
+        set<int,less<int>> b(a,a + 12);
+        // typedef std::ostream_iterator<int>(std::cout,' ') c;
+
+		std::ostream_iterator<int> c (std::cout," ");
         std::copy(b.begin(), b.end(), c);
 		cout << endl;
 

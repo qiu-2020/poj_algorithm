@@ -4,24 +4,32 @@ using namespace std;
 // 在此处补充你的代码
 
 class Rectangle{
-public:
-    int _a,_b;
+public:    
+    int _a,_b;   
     Rectangle(int a,int b):_a(a),_b(b){}
     friend ostream& operator<<(ostream& os,const Rectangle& r){
         os<<r._a * r._b<<' '<<r._a * 2 + r._b * 2;
         return os;
     }
     friend bool operator<(const Rectangle& r1,const Rectangle& r2){
-        if(r1._a * r1._b > r2._a * r2._b) return false;
+        if(r1._a * r1._b > r2._a * r2._b) return true;
         else if(r1._a * r1._b == r2._a * r2._b){
-            if(r1._a + r1._b > r2._a + r2._b) return false;
+            if(r1._a + r1._b > r2._a + r2._b) return true;
             else return true;
         }
-        else return true;
+        else return false;
+    }
+    bool operator<(const Rectangle& r){
+        if(_a * _b > r._a * r._b) return true;
+        else if(_a * _b == r._a * r._b){
+            if(_a + _b > r._a + r._b) return true;
+            else return true;
+        }
+        else return false;
     }
 };
 
-class Comp{
+struct Comp{
 public:
     bool operator()(const Rectangle& r1,const Rectangle& r2){
         if(r1._a + r1._b < r2._a + r2._b) return true;
@@ -32,6 +40,7 @@ public:
         else return false;
     }
 };
+
 
 int main() {
     multiset<Rectangle> m1;
