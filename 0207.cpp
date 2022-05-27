@@ -14,9 +14,9 @@ class A {
 
 class B : public A{
     public:
-        void Fun(){
-            cout << "B::Fun" << endl; 
-        }
+        // void Fun(){
+        //     cout << "B::Fun" << endl; 
+        // }
         virtual void Do(){
             cout << "B::Do" << endl;
         }
@@ -32,7 +32,7 @@ class C: public B{
         }
 };
 
-void Call1(A& p)
+void Call1(B& p)
 { 
 	p.Fun(); 
 	p.Do(); 
