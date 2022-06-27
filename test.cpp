@@ -4,7 +4,7 @@
 
 
 int main(){
-    std::cout<<""<<std::endl;
+    std::cout<<"hello WSL"<<std::endl;
 
 
     return 0;
