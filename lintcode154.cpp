@@ -39,7 +39,6 @@ public:
             if(p[i] == '*') ++count;
         int l1 = s.length(),l2 = p.length() - count;
         bool dp[l1 + 1][l2 + 1],flag = false;
-        dp[0][0] = true;
         for(int i = 0;i < l2 + 1;++i)
             if(p[i] != '*' && p[i + 1] == '*' && flag == false){
                 dp[0][i] = true;
@@ -48,8 +47,9 @@ public:
             else dp[0][i] = false;
         for(int i = 0;i < l1 + 1;++i)
             dp[i][0] = false;
-        for(int i = 0;i <= l1;++i){
-            for(int j = 0;j <= l2;++j){
+        dp[0][0] = true;    
+        for(int i = 1;i <= l1;++i){
+            for(int j = 1;j <= l2;++j){
                 if(p[j] == '*'){
                     if(p[j - 1] == s[i] || p[j - 1] == '.')
                         dp[i][j] = dp[i - 1][j - 1] || dp[i - 1][j] || dp[i][j - 2];
@@ -78,10 +78,13 @@ int main(){
     //################################################
 
     Solution s;
-    string s[7]{"aa","aa","aaa","aa","aa","ab","aab"},p[7]{"a","aa","aa","a*",".*",".*","c*a*b*"};
-    for(int i = 0;i < 7;++i){
-        // if(s.isMatch(s[i],p[i]))
-    }
+    string str[7]{"aa","aa","aaa","aa","aa","ab","aab"},p[7]{"a","aa","aa","a*",".*",".*","c*a*b*"};
+    for(int i = 0;i < 7;++i)
+        if(s.isMatch(str[i],p[i]))
+            std::cout<<"true"<<std::endl;
+        else std::cout<<"fasle"<<std::endl;    
+    string s1("aa"),P1("aa");
+    std::cout<<s.isMatch(s1,P1)<<std::endl;
 
 
     return 0;
